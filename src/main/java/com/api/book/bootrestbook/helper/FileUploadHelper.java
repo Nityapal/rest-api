@@ -1,19 +1,32 @@
 package com.api.book.bootrestbook.helper;
 
 import java.io.File;
+import java.io.IOException;
 //import java.io.FileOutputStream;
 //import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileUploadHelper {
  
-    public final String UPLOAD_DIR= "C:\\Users\\nitya\\spboot\\bootrestbook\\src\\main\\resources\\static";
+    //public final String UPLOAD_DIR= "C:\\Users\\nitya\\spboot\\bootrestbook\\src\\main\\resources\\static";
+    //public final String UPLOAD_DIR= new ClassPathResource("static/image/").getFile().getAbsolutePath();
+    
+    // public FileUploadHelper() throws IOException{
+
+    // }
+    public final String UPLOAD_DIR;
+
+    public FileUploadHelper() throws IOException {
+        this.UPLOAD_DIR = new ClassPathResource("static/").getFile().getAbsolutePath();
+    }
+
 
     public boolean uploadFile(MultipartFile multipartFile){
         boolean f= false;
