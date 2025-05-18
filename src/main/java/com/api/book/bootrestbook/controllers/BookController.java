@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +32,7 @@ public class BookController {
 
         List<Book> list= bookService.getAllBooks();
         if(list.size()<=0) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.of(Optional.of(list));
+        return ResponseEntity.status(HttpStatus.CREATED).body(list);
 
         //return this.bookService.getAllBooks();
     }
@@ -47,17 +46,29 @@ public class BookController {
     //new book handler
     @PostMapping("/books")
     public ResponseEntity<Book> addBook(@RequestBody Book book){
-        Book b= null;
+        //Book b= null;
         try{
-            this.bookService.addBook(book);
-            System.out.println(book);
-            return ResponseEntity.of(Optional.of(b));
+            Book b= this.bookService.addBook(book);
+            //System.out.println(book);
+            return ResponseEntity.status(HttpStatus.CREATED).body(b);
         }catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         
     }
+
+    // @PostMapping("/books")
+    // public ResponseEntity<Book> addBook(@RequestBody Book book){
+    //     try {
+    //         Book savedBook = this.bookService.addBook(book);
+    //         return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
+    //     } catch(Exception e){
+    //         e.printStackTrace();
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    //     }
+    // }
+
 
     //delete book handler
     @DeleteMapping("/books/{bookId}")
