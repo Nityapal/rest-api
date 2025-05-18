@@ -3,6 +3,7 @@ package com.api.book.bootrestbook.controllers.services;
 //import java.util.ArrayList;
 import java.util.List;
 //import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,10 +34,17 @@ public class BookService {
     //get single book by id 
     public Book getBookById(int id){
 
-        Book book = null;
+        //Book book = null;
         //book= list.stream().filter(e->e.getId()==id).findFirst().get();
-        this.bookRepository.findById(id);
-        return book;
+        //this.bookRepository.findById(id);
+        //return book;
+        //return this.bookRepository.findById(id).orElse(null);
+        Optional<Book> optionalBook = this.bookRepository.findById(id);
+        if(optionalBook.isPresent()){
+            return optionalBook.get();
+        } else {
+            return null;
+        }
     }
 
     //adding the book

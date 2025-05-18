@@ -1,5 +1,6 @@
 package com.api.book.bootrestbook.controllers;
 import java.util.List;
+//import java.util.Optional;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,19 @@ public class BookController {
         //return this.bookService.getAllBooks();
     }
 
-    //get single book handler
-    @GetMapping("/books/{id}")
-    public Book getBook(@PathVariable("id") int id){
-        return bookService.getBookById(id);
+    // //get single book handler
+    // @GetMapping("/books/{id}")
+    // public Book getBook(@PathVariable("id") int id){
+    //     return bookService.getBookById(id);
+    // }
+    @GetMapping("/books/{bookId}")
+    public ResponseEntity<Book> getBook(@PathVariable("bookId") int bookId) {
+        Book book = this.bookService.getBookById(bookId);
+        //System.out.println("Fetched book: " + book);
+        if (book == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.of(Optional.of(book)) ;
     }
 
     //new book handler
