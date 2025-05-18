@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.book.bootrestbook.controllers.services.BookService;
 import com.api.book.bootrestbook.entities.Book;
+import com.api.book.bootrestbook.services.BookService;
 
 @RestController
 public class BookController {
